@@ -1,0 +1,21 @@
+{
+  "slack": [
+    {
+      "client_id": "",
+      "client_secret": "",
+      "redirect_url": ""
+    }
+  ],
+  "concept_insights": [
+    {
+      "name": "",
+      "label": "concept_insights",
+      "plan": "standard",
+      "credentials": {
+        "url": "",
+        "password": "",
+        "username": ""
+      }
+     }
+  ]
+}
