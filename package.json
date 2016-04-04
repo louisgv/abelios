@@ -2,7 +2,7 @@
   "name": "abelios",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lab.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,5 +11,11 @@
     "agriculture"
   ],
   "author": "L.A.B <lgvichy@gmail.com> (https://louisgv.github.io)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "0.0.15",
+    "request": "^2.69.0",
+    "slack-wrapi": "^0.1.3",
+    "watson-developer-cloud": "^1.3.3"
+  }
 }
