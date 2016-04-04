@@ -19,7 +19,10 @@ controller.hears('^stop', 'direct_message', function (bot, message) {
 
 // EVAS
 
-controller.on(['direct_message', 'mention', 'direct_mention'], function (bot, message) {
+let nlc = require('./modulas/ibm/nlc');
+
+controller.on(["mention", "direct_mention", "direct_message"], function (bot, message) {
+
   bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
@@ -28,6 +31,13 @@ controller.on(['direct_message', 'mention', 'direct_mention'], function (bot, me
     if(err) {
       console.log(err)
     }
-    bot.reply(message, 'I heard you loud and clear boss.');
+
+    console.log(message);
+
+    bot.reply(message,
+      `I heard you loud and clear boss.
+      ${message.text}`
+    );
   });
+
 });

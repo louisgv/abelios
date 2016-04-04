@@ -31,6 +31,7 @@ if(process.env.VCAP_SERVICES) {
     // relationship: vcapServices.relationship_extraction[0].credentials,
 
     concept: vcapServices.concept_insights[0].credentials,
+    nlc: vcapServices.natural_language_classifier[0].credentials,
     slack : key.slack[0]
   }
 } else {
@@ -42,8 +43,8 @@ if(process.env.VCAP_SERVICES) {
     // toneAuth: key.tone_analyzer[0].credentials,
     // relationship: key.relationship_extraction[0].credentials,
     // alchemy: key.alchemy_api[0].credentials,
-
     concept: key.concept_insights[0].credentials,
+    nlc: key.natural_language_classifier[0].credentials,
     slack : key.slack[0]
   }
 }
