@@ -75,6 +75,9 @@ exports.getConcept = function (concept, callback) {
       'password': secret.password
     },
   }, function (error, response, body) {
+    if (error){
+      return console.log(error);
+    }
     callback(body);
   });
 };
