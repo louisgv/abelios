@@ -2,7 +2,7 @@
 
 const Botkit = require('botkit');
 
-let slackKey = require('../modulas/credential')
+let slackKey = require('../modules/credential')
   .auth.slack;
 
 // just a simple way to make sure we don't
