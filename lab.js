@@ -15,20 +15,32 @@ controller.hears('^stop', 'direct_message', function (bot, message) {
 
 // Receiving CV
 
-controller.on('file_shared',function(bot,message) {
+let doc = require('./modules/ibm/doc');
 
-  console.log('FILE SHARED!');
+controller.on('file_shared', function (bot, message) {
 
-  console.log(message);
+  // bot.say({
+  //   text: JSON.stringify(message, null, 2),
+  //   channel: message.file.ims[0]
+  // });
 
-  console.log(message.file.channels[0]);
-  // message contains data sent by slack
-  // in this case:
-  // https://api.slack.com/events/channel_joined
-  bot.say({
-    text : JSON.stringify(message, null, 2),
-    channel: message.file.ims[0]
-  });
+  let file = message.file;
+
+  if (file.filetype === "pdf" || file.filetype === "docx"){
+    doc.convert(bot.config.token, file.url_private, function (response) {
+      bot.say({
+        text: `Awesome, seems like you are all set!`,
+        channel: message.file.ims[0]
+      })
+    })
+  } else {
+    bot.say({
+      text: `Oops, I can only process PDF or DOCX files. Please try again :sweat_smile:`,
+      channel: message.file.ims[0]
+    })
+  }
+
+
 });
 
 

@@ -6,7 +6,7 @@ let path = require('path');
 
 let jsonPath = '../db/nlc';
 
-let trainsetPath = '../nlcset';
+let trainsetPath = '../data';
 
 let outputPath = path.join(__dirname, trainsetPath, 'role.csv');
 
