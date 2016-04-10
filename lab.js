@@ -21,10 +21,6 @@ controller.hears('^stop', 'direct_message', function (bot, message) {
 
 let doc = require('./modules/ibm/doc');
 
-controller.on('im_open', function (bot, im) {
-  console.log(bot);
-})
-
 controller.on('file_shared', function (bot, message) {
 
   // bot.say({

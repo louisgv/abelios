@@ -23,6 +23,9 @@ function initDirectMessage(controller) {
         if(!err) {
           trackBot(bot);
         }
+        bot.startPrivateConversation({
+          user: bot.config.createdBy
+        }, require('../convos/intro'));
       });
     }
   });
