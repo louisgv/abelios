@@ -23,10 +23,6 @@ function initDirectMessage(controller) {
         if(!err) {
           trackBot(bot);
         }
-
-        bot.startPrivateConversation({
-          user: config.createdBy
-        }, require('../convas/intro'));
       });
     }
   });

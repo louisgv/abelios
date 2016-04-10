@@ -1,6 +1,6 @@
 "use strict";
 
-let helper = require('../convas/helper');
+let utils = require('../convas/utils');
 
 let nlc = require('../modulas/ibm/nlc');
 
@@ -15,7 +15,7 @@ module.exports = function (controller, mode) {
 
     // let s = ccTest;
     //
-    // let r = helper.infoResponse(s.label, s.abstract,s.link, s.thumbnail);
+    // let r = utils.infoResponse(s.label, s.abstract,s.link, s.thumbnail);
     //
     // bot.reply(message, r);
     //
@@ -28,7 +28,7 @@ module.exports = function (controller, mode) {
       // console.log(sr);
       let s = respond;
 
-      let r = helper.infoResponse(s.label, s.abstract,s.link, s.thumbnail);
+      let r = utils.infoResponse(s.label, s.abstract,s.link, s.thumbnail);
 
       bot.reply(message, r);
     })

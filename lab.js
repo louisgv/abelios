@@ -21,6 +21,10 @@ controller.hears('^stop', 'direct_message', function (bot, message) {
 
 let doc = require('./modules/ibm/doc');
 
+controller.on('im_open', function (bot, im) {
+  console.log(bot);
+})
+
 controller.on('file_shared', function (bot, message) {
 
   // bot.say({
@@ -28,22 +32,44 @@ controller.on('file_shared', function (bot, message) {
   //   channel: message.file.ims[0]
   // });
 
+  bot.api.channels.list({}, (err, response) => {
+    //Do something...
+    response.channels.filter((chan) => {return chan.is_member}).map((c) => {
+      console.log(c);
+    })
+  })
+
   let file = message.file;
 
   if(file.filetype === "pdf" || file.filetype === "docx") {
 
-    doc.convert(bot.config.token, file.url_private, function (response) {
-
+    doc.convert(bot.config.token, file.url_private, (docData) => {
+      if(docData.warning) {
+        bot.say({
+          text: `There was some problem with the document, namely:
+            > ${docData.warning}
+            You might want to submit a PDF instead?`,
+          channel: message.file.ims[0]
+        })
+        return;
+      }
       bot.say({
-        text: JSON.stringify(response, null, 2),
+        text: JSON.stringify(docData, null, 2),
         channel: message.file.ims[0]
       })
 
     })
 
+  } else if(file.filetype === "png" || file.filetype === "jpg") {
+
+    bot.say({
+      text: `Awesome, we can use that for the job listing :)`,
+      channel: message.file.ims[0]
+    })
+
   } else {
     bot.say({
-      text: `Oops, I can only process PDF or DOCX files. Please try again :sweat_smile:`,
+      text: `Oops, I can only process PDF or DOCX files for Resume; PNG or JPG for job listing. Please try again :sweat_smile:`,
       channel: message.file.ims[0]
     })
   }
@@ -56,7 +82,6 @@ controller.on('file_shared', function (bot, message) {
 let nlc = require('./modules/ibm/nlc');
 
 controller.on(["ambient", "mention", "direct_mention"], function (bot, message) {
-
   bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
@@ -66,10 +91,12 @@ controller.on(["ambient", "mention", "direct_mention"], function (bot, message) 
       console.log(err)
     }
 
-    nlc.getClasses(message.text, function (response) {
-      bot.reply(message,
-        JSON.stringify(response, null, 2)
-      );
+    nlc.getClasses(message.text, function (classData) {
+      bot.startPrivateConversation({
+        user: message.user
+      }, function (response, convo) {
+        convo.say(JSON.stringify(classData, null, 2));
+      })
     })
   });
 });

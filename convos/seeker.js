@@ -1,10 +1,8 @@
 "use strict";
 
+
+
 function askInfo() {
-
-}
-
-function ask() {
 
 }
 
