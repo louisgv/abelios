@@ -1,34 +1,33 @@
 "use strict";
 
+let watson = require('watson-developer-cloud');
+
+let secret = require('../modules/credential')
+  .auth.nlc;
+
 let fs = require('fs');
 
 let path = require('path');
 
-let jsonPath = '../db/nlc';
+let natural_language_classifier = watson.natural_language_classifier({
+  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+  username: secret.username,
+  password: secret.password,
+  version: 'v1'
+});
 
-let trainsetPath = '../data';
+let dataPath = path.join(__dirname, '../data', `role.csv`);
 
-let outputPath = path.join(__dirname, trainsetPath, 'role.csv');
+let params = {
+  language: 'en',
+  name: 'posterOseeker',
+  training_data: fs.createReadStream(dataPath)
+};
 
-let inputPath = path.join(__dirname, jsonPath, `role.json`);
-
-let buffer = fs.readFileSync(inputPath);
-
-let data = JSON.parse(buffer.toString());
-
-let outputCSV = "";
-
-for (let classifier in data) {
-  if (data.hasOwnProperty(classifier)) {
-    for (let i = 0; i < data[classifier].length; i++) {
-      outputCSV += `${data[classifier][i]},${classifier}\n`
-    }
-  }
-}
-
-fs.writeFile(outputPath, outputCSV, (err) => {
-  if(err) {
-    throw err;
-  }
-  console.log('It\'s saved!');
+natural_language_classifier.create(params, function(err, response) {
+  if (err)
+    console.log(err);
+  else
+    // copy the classifier_id from the response
+    console.log(JSON.stringify(response, null, 2));
 });

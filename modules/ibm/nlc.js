@@ -2,7 +2,7 @@
 
 let watson = require('watson-developer-cloud');
 
-var secret = require('../credential')
+let secret = require('../credential')
   .auth.nlc;
 
 let natural_language_classifier = watson.natural_language_classifier({
@@ -12,13 +12,15 @@ let natural_language_classifier = watson.natural_language_classifier({
   version: 'v1'
 });
 
+const nlcID = "f1704ex55-nlc-927";
+
 exports.getList = function (callback) {
   natural_language_classifier.list({},
     function (err, response) {
       if(err)
-        console.log('error:', err);
+      console.log('error:', err);
       else
-        console.log(JSON.stringify(response, null, 2));
+      console.log(JSON.stringify(response, null, 2));
     }
   );
 }
@@ -27,11 +29,13 @@ exports.getClasses = function (text, callback) {
 
   natural_language_classifier.classify({
       text: text,
-      classifier_id: "563C46x19-nlc-4058"
+      classifier_id: nlcID
     },
     function (err, response) {
-      if(err)
+      if(err){
         console.log('error:', err);
+        callback(err);
+      }
       else {
         console.log(JSON.stringify(response, null, 2));
         callback(response);

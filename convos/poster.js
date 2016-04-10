@@ -1,5 +1,30 @@
 "use strict";
 
+function askScreeningQuestions() {
+
+}
+
+function askInfo() {
+  // Name, Company, Phone, Address, Website
+}
+
+function askRole() {
+
+}
+
+function askLocation() {
+
+}
+
+function askMinExperience() {
+
+}
+
+function askMinDegree() {
+
+}
+
+
 exports.start = function (err, convo) {
   if(err) {
     console.log(err);

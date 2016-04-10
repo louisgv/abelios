@@ -1,5 +1,13 @@
 "use strict";
 
+function askInfo() {
+
+}
+
+function ask() {
+
+}
+
 exports.start = function (err, convo) {
   if(err) {
     console.log(err);

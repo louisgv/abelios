@@ -8,6 +8,10 @@ require('./events/rtm')(controller);
 
 // REGEX
 
+let Help = require('./convos/help');
+
+controller.hears("^help$", ["ambient", "direct_mention"], Help.show);
+
 controller.hears('^stop', 'direct_message', function (bot, message) {
   bot.reply(message, 'Goodbye');
   bot.rtm.close();
@@ -26,20 +30,23 @@ controller.on('file_shared', function (bot, message) {
 
   let file = message.file;
 
-  if (file.filetype === "pdf" || file.filetype === "docx"){
+  if(file.filetype === "pdf" || file.filetype === "docx") {
+
     doc.convert(bot.config.token, file.url_private, function (response) {
+
       bot.say({
-        text: `Awesome, seems like you are all set!`,
+        text: JSON.stringify(response, null, 2),
         channel: message.file.ims[0]
       })
+
     })
+
   } else {
     bot.say({
       text: `Oops, I can only process PDF or DOCX files. Please try again :sweat_smile:`,
       channel: message.file.ims[0]
     })
   }
-
 
 });
 
@@ -59,12 +66,10 @@ controller.on(["ambient", "mention", "direct_mention"], function (bot, message) 
       console.log(err)
     }
 
-    console.log(message);
-
-    bot.reply(message,
-      `I heard you loud and clear boss.
-      ${message.text}`
-    );
+    nlc.getClasses(message.text, function (response) {
+      bot.reply(message,
+        JSON.stringify(response, null, 2)
+      );
+    })
   });
-
 });
